@@ -553,6 +553,7 @@
 			// always need to override this.
 			return $("<input>")
 					.attr("type", "text")
+					.attr("size", data.length) // set input size to length of text
 					.val(data);
 		},
 
