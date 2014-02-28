@@ -482,15 +482,21 @@
 
 		var ok = opts.okButton;
 		if (ok) {
-			var $button = $("<input>").attr("type", "button").attr("value", ok)
-					.addClass('jip-button jip-ok-button');
+			var $button = $("<button>",{
+				"type": "submit",
+				"class": "jip-button jip-ok-button"
+			});
+			$button.html(ok);
 			setHandler($button, 'submit');
 		}
 
 		var cancel = opts.cancelButton;
 		if (cancel) {
-			$button = $("<input>").attr("type", "button").attr("value", cancel)
-					.addClass('jip-button jip-cancel-button');
+			$button = $("<button>",{
+				"type": "button",
+				"class": "jip-button jip-cancel-button"
+			});
+			$button.html(cancel);
 			setHandler($button, 'jip:cancel');
 		}
 	};
