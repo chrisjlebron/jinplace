@@ -78,7 +78,8 @@
 		'activator',
 		'textOnly',
 		'placeholder',
-		'submitFunction'
+		'submitFunction',
+		'cancelOnFail'
 	];
 
 	/**
@@ -136,6 +137,9 @@
 
 			if (opts.textOnly)
 				opts.textOnly = opts.textOnly !== 'false';
+
+			if (opts.cancelOnFail)
+				opts.cancelOnFail = opts.cancelOnFail !== 'false';
 
 			return opts;
 		},
@@ -320,7 +324,9 @@
 						self.onUpdate(editor, opts, data);
 					})
 					.fail(function() {
-						self.cancel(editor);
+						if (opts.cancelOnFail) {
+							self.cancel(editor);
+						}
 					});
 		},
 
