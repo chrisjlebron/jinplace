@@ -180,6 +180,9 @@
 			ev.preventDefault();
 			ev.stopPropagation();
 
+			// if the activator is a separate button, this will hide it
+			this.hideActivator();
+
 			// Turn off the activation handler, and disable any effect in case the activator
 			// was a button that might submit.
 			$(ev.currentTarget)
@@ -278,6 +281,46 @@
 		},
 
 		/**
+		 * Hide activator element (if not the input itself)
+		 *
+		 * @return {void}
+		 */
+
+		hideActivator: function() {
+			var self = this;
+
+			// if the activator is a separate button...
+			// (i.e. not the input field itself)
+			if (!self.opts.activator.is(self.element)) {
+				// hide the edit activation button/element
+				$(self.opts.activator).hide();
+
+				// using class for hiding (noodle)
+				// $(self.opts.activator).addClass('js-hidden');
+			}
+		},
+
+		/**
+		 * Display activator element (if not the input itself) again
+		 *
+		 * @return {void}
+		 */
+
+		showActivator: function() {
+			var self = this;
+
+			// if the activator is a separate button...
+			// (i.e. not the input field itself)
+			if (!self.opts.activator.is(self.element)) {
+				// now that we're done, show the activator button/element again
+				$(self.opts.activator).show();
+
+				// using class for hiding (noodle)
+				// $(self.opts.activator).removeClass('js-hidden');
+			}
+		},
+
+		/**
 		 * Throw away any edits and return the element to its original text.
 		 *
 		 * @param {editorBase} editor The element editor.
@@ -286,6 +329,9 @@
 		cancel: function(editor) {
 			var self = this;
 			self.element.html(self.origValue);
+
+			// if the activator is a separate element, this will show it again
+			self.showActivator();
 
 			editor.finish();
 
@@ -341,6 +387,10 @@
 		onUpdate: function(editor, opts, data) {
 			var self = this;
 			self.setContent(data);
+
+			// if the activator is a separate element, this will show it again
+			self.showActivator();
+
 			editor.finish();
 			self.bindElement(opts);
 		},
